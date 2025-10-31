@@ -137,6 +137,8 @@ snort --version
 
 Langkah ini memastikan NIC dapat melihat semua lalu lintas (promiscuous mode) dan menonaktifkan offload tertentu untuk Snort. Ganti `ensxx` dengan nama NIC Anda (cek dengan `ip addr` atau `ifconfig`).
 
+![ensxx](https://github.com/anas-shn/skuriti/blob/main/docs/ensxx.png)
+
 Pengaturan NIC sementara:
 
 ```bash
