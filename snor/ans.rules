@@ -1,0 +1,19 @@
+#sqli
+
+alert tcp any any -> 192.168.122.106 80 (msg:"SQLi Error-Based Single Quote"; flow:to_server,established; content:"%27"; http_uri; sid:1000001; rev:1;)
+alert tcp any any -> 192.168.122.106 80 (msg:"SQLi Error-Based Double Quote"; flow:to_server,established; content:"%22"; http_uri; sid:1000002; rev:1;)
+alert tcp any any -> 192.168.122.106 80 (msg:"SQLi Boolean AND"; flow:to_server,established; content:"and"; nocase; http_uri; sid:1000003; rev:1;)
+alert tcp any any -> 192.168.122.106 80 (msg:"SQLi Boolean OR"; flow:to_server,established; content:"or"; nocase; http_uri; sid:1000004; rev:1;)
+alert tcp any any -> 192.168.122.106 80 (msg:"SQLi Union Select"; flow:to_server,established; content:"union"; nocase; http_uri; sid:1000005; rev:1;)
+alert tcp any any -> 192.168.122.106 80 (msg:"SQLi Order By"; flow:to_server,established; content:"order by"; nocase; http_uri; sid:1000006; rev:1;)
+
+#xss
+alert tcp any any -> 192.168.122.106 80 (msg:"XSS Script Tag"; flow:to_server,established; content:"<script"; nocase; http_uri; sid:1000008; rev:1;)
+alert tcp any any -> 192.168.122.106 80 (msg:"XSS IMG SRC"; flow:to_server,established; pcre:"/(%3C|<)(img|%69%6D%67)[^\\n]+(%3E|>)/i"; http_uri; sid:1000009; rev:1;)
+alert tcp any any -> 192.168.122.106 80 (msg:"XSS HTML Tag"; flow:to_server,established; pcre:"/(%3C|<)[^\\n]+(%3E|>)/i"; http_uri; sid:1000010; rev:1;)
+alert tcp any any -> 192.168.122.106 80 (msg:"XSS Alert Function"; flow:to_server,established; content:"alert("; nocase; http_uri; sid:1000011; rev:1;)
+
+#csrf
+alert tcp any any -> 192.168.122.106 80 (msg:"CSRF POST No Referer"; flow:to_server,established; content:"POST"; http_method; content:"/vulnerabilities/csrf/"; http_uri; detection_filter:track by_src, count 5, seconds 60; sid:1000012; rev:1;)
+alert tcp any any -> 192.168.122.106 80 (msg:"CSRF Forged Request"; flow:to_server,established; content:"POST"; http_method; pcre:"/password_new|user_token/"; http_uri; sid:1000013; rev:1;)
+alert tcp any any -> 192.168.122.106 80 (msg:"CSRF No Origin Header"; flow:to_server,established; content:"POST"; http_method; content:"/dvwa/"; http_uri; sid:1000014; rev:1;)
