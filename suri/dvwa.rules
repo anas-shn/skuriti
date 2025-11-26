@@ -1,0 +1,18 @@
+# create rules for DVWA HIGH 
+# XSS rules
+# SQL Injection rules
+# CSRF rules
+
+# SQL Injection rules
+alert http any any -> $HOME_NET any (msg:"SQL Injection - Single Quote"; content:"'"; http_uri; sid:1000001; rev:1;)
+alert http any any -> $HOME_NET any (msg:"SQL Injection - OR 1=1"; content:"' OR 1=1"; http_uri; sid:1000002; rev:1;)
+alert http any any -> $HOME_NET any (msg:"SQL Injection - UNION SELECT"; content:"UNION SELECT"; nocase; http_uri; sid:1000003; rev:1;)
+
+# XSS rules
+alert http any any -> $HOME_NET any (msg:"XSS - Script Tag"; content:"<script>"; nocase; http_client_body; sid:1000004; rev:1;)
+alert http any any -> $HOME_NET any (msg:"XSS - Alert Function"; content:"alert("; nocase; http_client_body; sid:1000005; rev:1;)
+alert http any any -> $HOME_NET any (msg:"XSS - Onload Event"; content:"onload="; nocase; http_client_body; sid:1000006; rev:1;)
+
+# CSRF rules
+alert http any any -> $HOME_NET any (msg:"Potential CSRF - POST Request"; content:"POST"; http_method; content:"application/x-www-form-urlencoded"; http_header; sid:1000007; rev:1;)
+alert http any any -> $HOME_NET any (msg:"Potential CSRF - Missing CSRF Token"; content:"POST"; http_method; content:!"csrf_token"; http_client_body; sid:1000008; rev:1;)
