@@ -1,0 +1,42 @@
+# Error-Based SQL Injection
+alert tcp any any -> any any (msg:"SQL Injection - EXTRACTVALUE Attack"; content:"EXTRACTVALUE", nocase; sid:1000018; rev:1;)
+
+# Time-Based Blind SQL Injection
+alert tcp any any -> any any (msg:"SQL Injection - MySQL SLEEP Attack"; content:"SLEEP(", nocase; sid:1000014; rev:1;)
+
+# Boolean-Based Blind SQL Injection
+alert tcp any any -> any any (msg:"SQL Injection - AND 1=1 Attack"; content:"AND 1=1", nocase; sid:1000010; rev:1;)
+
+# UNION-Based SQL Injection
+alert tcp any any -> any any (msg:"SQL Injection - UNION SELECT Attack"; content:"UNION", nocase; content:"SELECT", nocase, distance 0, within 20; sid:1000006; rev:1;)
+
+# SQL Comment Bypass
+alert tcp any any -> any any (msg:"SQL Injection - Double dash Comment"; content:"--"; sid:1000022; rev:1;)
+
+# Information Schema Access
+alert tcp any any -> any any (msg:"SQL Injection - Information Schema Access"; content:"Information_Schema", nocase; sid:1000026; rev:1;)
+
+# Database Function Calls
+alert tcp any any -> any any (msg:"SQL Injection - VERSION function"; content:"VERSION(", nocase; sid:1000030; rev:1;)
+
+# SQL Keywords Detection
+alert tcp any any -> any any (msg:"SQL Injection - DROP TABLE"; content:"DROP TABLE", nocase; sid:1000035; rev:1;)
+
+# Advanced SQL Injection Patterns
+alert tcp any any -> any any (msg:"SQL Injection - LOAD_FILE Attack"; content:"LOAD_FILE", nocase; sid:1000041; rev:1;)
+
+# Quote and Character Bypass
+alert tcp any any -> any any (msg:"SQL Injection - Single quote"; content:"'"; sid:1000045; rev:1;)
+
+# SQL Injection Tool Detection
+alert tcp any any -> any any (msg:"SQL Injection - SQLMap Tool detected"; content:"User-Agent|3A| sqlmap"; sid:1000049; rev:1;)
+
+# Conditional SQL Injection
+alert tcp any any -> any any (msg:"SQL Injection - IF condition"; content:"IF(", nocase; sid:1000052; rev:1;)
+
+# String Manipulation Functions
+alert tcp any any -> any any (msg:"SQL Injection - CONCAT function"; content:"CONCAT(", nocase; sid:1000055; rev:1;)
+
+# Numeric SQL Injection
+alert tcp any any -> any any (msg:"SQL Injection - Mathematical operation"; pcre:"/\d+[\+\-\*\/]\d+/"; sid:1000059; rev:1;)
+

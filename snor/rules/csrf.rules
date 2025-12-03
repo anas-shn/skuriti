@@ -1,0 +1,2 @@
+alert tcp any any -> any 80 (msg:"CSRF Attempt (unlikely) - password_new"; sid:4000031; rev:1; content:"password_new", nocase;)
+alert tcp any any -> any 80 (msg:"CSRF Attempt (likely)     - missing user_token"; sid:4000032; rev:1; content:!"user_token", nocase;)

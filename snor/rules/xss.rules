@@ -1,0 +1,49 @@
+alert tcp any any -> any any (
+    msg:"XSS - script tag 1 detected";
+    flow:to_server;
+    content:"script", nocase;
+    sid: 1000078;
+)
+
+alert tcp any any -> any any (
+    msg:"XSS - java tag 1 detected";
+    flow:to_server;
+    content:"java script", nocase;
+    sid: 1000079;
+)
+
+alert tcp any any -> any any (
+    msg:"XSS - src tag 1 detected";
+    flow:to_server;
+    content:"src=", nocase;
+    sid: 1000080;
+)
+
+alert tcp any any -> any any (
+    msg:"XSS - IMG tag 1 detected";
+    flow:to_server;
+    content:"IMG", nocase;
+    sid: 1000081;
+)
+
+alert tcp any any -> any any (
+    msg:"XSS - Alert tag 1 detected";
+    flow:to_server;
+    content:"alert", nocase;
+    sid: 1000082;
+)
+
+alert tcp any any -> any any (
+    msg:"XSS - onerror tag 1 detected";
+    flow:to_server;
+    content:"oneerror", nocase;
+    sid: 1000083;
+)
+
+alert tcp any any -> 192.168.122.106 80 (
+    msg:"DVWA XSS - Script Tag Injection";
+    flow:to_server,established;
+    content:"<script"; http_client_body; 
+    sid:20000101; rev:1;
+    classtype:web-application-attack;
+)
